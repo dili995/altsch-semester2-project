@@ -80,13 +80,6 @@ Using the SSH client login page, follow the instructions given and login to your
 ![image.png](image%202.png)
 
 Run the `hostnamectl` command:
-
-```markdown
-```bash
-hostnamectl
-```
-```
-
 This command displays system hostname and operating system information and shows the below to confirm the setup on AWS.
 
 ![image.png](image%203.png)
