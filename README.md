@@ -1,7 +1,5 @@
 # README.md
 
-### **Provisioning a Linux server to host a simple html webpage using apache/nginx, configuring networking for the server and configuring HTTPS for the web server using a free SSL certificate.**
-
 ## **Question**
 
 **“Imagine you are part of a startup team tasked with creating a prototype for a web application. Your first step is to provision a server and set up a simple landing page to demonstrate your team’s capabilities to potential investors. Your task is as follows:”**
@@ -34,28 +32,15 @@
 
 - Configure HTTPS for your web server using a free SSL certificate (e.g., Let’s Encrypt).
 
-**Submission**
-
-___
-
-– Create your submissions and screenshots in a git repository.
-
-– The documentation required should be in the Readme.md of your github repository
-
-– The documentation should contain your public ip address and any other useful information to run you web server
-
-Submit your work via the [AltSchool of Cloud Engineering Karatu ’24 2nd Semester Exam Submission Link](https://forms.gle/gK8Qba6CZq8czbwt9)
-
 ## **DOCUMENTATION**
 
 ## Stack used
 
 1. Linux distribution: Ubuntu, using Termius as the SSH client and terminal emulator
 2. Cloud virtualization platform: AWS
-3. Web server: Apache, Nginx
+3. Web server: Apache2
 4. IDE: VS code
-5. Version control: Git 
-6. **Provisioning** 
+5. Version control: Git  ****
 
 ## Introduction
 
@@ -108,57 +93,58 @@ This command displays system hostname and operating system information and shows
 
 ## Web Server Setup
 
-Nginx and Apache were both installed to observe how to serve web content with both web servers. Run `sudo apt update` to ensure your package list is up to date. 
+Apache2 was installed to serve the html web content that would be generated. Run `sudo apt update` to ensure your package list is up to date. 
 
-Then run the `systemctl status nginx` or `nginx -v` commands to check if you have nginx running on your ubuntu system. If the CLI shows ‘not found’, Nginx is not yet installed on your system. Repeat the same process for Apache.
-
-Since the server was recently created, both packages would be unavailable and would show as seen below. 
-
-![image.png](image%204.png)
+Then run the `systemctl status apache2` or `apache2 -v` commands to check if you have apache running on your ubuntu system. If the CLI shows ‘not found’, Apache2 is not yet installed on your system.
 
 Additionally, run `apt list --upgradable` to see all packages currently available on your server.
 
+![image.png](image%204.png)
+
+Run `apt search apache2` to search for the package on Ubuntu’s default repositories before installation. 
+
+**Installing Apache:** To install apache web server, run `sudo apt install -y apache2` to install the latest version of apache.
+
 ![image.png](image%205.png)
 
-Run `apt search <package>` for either Nginx or Apache to search for the package on Ubuntu’s default repositories before installation. 
-
-**Installing Apache:** To install Apache web server, run `sudo apt install -y apache2` to install the latest version of Apache2.
+Using the `apache2 -v` command, confirm if the package is installed on the server.
 
 ![image.png](image%206.png)
 
-**Installing Nginx:** To install Nginx web server, run `sudo apt install -y nginx` to install the latest version of Nginx.
+Use `sudo systemctl start apache2` to start running the apache web server on your instance and `systemctl status apache2` to confirm if the web server is active (running).
 
 ![image.png](image%207.png)
 
-Using the `nginx -v` and `apache2 -v` commands, confirm if both packages are  now on the server.
+## HTML Page Deployment
+
+**Create a simple HTML page:** Created a simple `index.html` page on VS code IDE and below is a snapshot of the simple webpage used for the project. 
 
 ![image.png](image%208.png)
 
-## HTML Page Deployment
+To deploy above webpage to the web server, port 80 has to be added in configuration for HTTP access. This is either done through the command line interface or on your AWS security group which was created earlier while provisioning your instance.
 
-**Create a simple HTML page:** f
+## Network Configuration
 
-**Deploying the HTML page on the server:**
-
-sudo ufw allow 80
-sudo ufw reload
-
-**Deploying the HTML page using Nginx server:** f
-
-Start Nginx by running `sudo systemctl start nginx` and check to confirm nginx is running with `systemctl status nginx`. 
+**Configuring HTTP (Port 80):** On the AWS console, go to the EC2 page and click on security groups. Click on the security group configured for the linux server and edit the inbound rules by adding HTTP (port 80).
 
 ![image.png](image%209.png)
 
-**Deploying the HTML page using Apache server:** f
+Once the Port 80 has been added to the security group, search the HTTP for your IP address to confirm if the web server is running and notice below page should be displayed.
 
-## Networking
+![image.png](image%2010.png)
 
-**Configuring Port 80:** k
+Then cd to `/var/www.html` directory, create an index.html file and paste in your code from VS code using nano or vim text editor. 
 
-**Configuring HTTPS:** k
+![image.png](image%2011.png)
 
-## **Tasks**
+Set the file to be readable using chmod file permission.
 
-## **Tasks**
+![image.png](image%2012.png)
 
-## **Tasks**
+After this, the html file will be accessible via the instances’s IP address in a browser:
+
+![image.png](image%2013.png)
+
+ 
+
+## Public IP Address: 18.185.102.27
